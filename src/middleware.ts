@@ -10,7 +10,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' https://connect.facebook.net",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://connect.facebook.net",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https://*.amazonaws.com",
     "media-src 'self' https://*.amazonaws.com",
