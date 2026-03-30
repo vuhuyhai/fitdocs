@@ -1,0 +1,52 @@
+# FitDocs — Thư viện tài liệu Fitness
+# Cursor Rules
+
+## Tech Stack
+- Framework: Next.js 16 (App Router) + TypeScript
+- Styling: Tailwind CSS v4 (dark mode default, zinc palette)
+- Database: PostgreSQL via Drizzle ORM (src/lib/db.ts)
+- Storage: AWS S3 (src/lib/s3.ts) — presigned URLs only, never expose raw S3 paths
+- State: Zustand
+- Validation: Zod
+- Notifications: Sonner
+- Date: date-fns
+
+## Folder Structure
+src/
+  app/
+    (user)/           # User-facing pages
+    admin/            # Admin pages (password protected)
+    api/              # API routes
+  components/
+    ui/               # Reusable UI primitives
+    viewers/          # PDF, DOCX, Video viewers
+    admin/            # Admin-specific components
+  lib/
+    db.ts             # Drizzle ORM client
+    s3.ts             # S3 helper (presigned URLs)
+    auth.ts           # Admin cookie auth (HMAC)
+  db/
+    schema.ts         # Drizzle schema definitions
+    migrations/       # SQL migration files
+
+## Coding Conventions
+- Language: Vietnamese for UI text, English for code/comments
+- Components: PascalCase, one per file
+- API routes: REST, return { data } or { error }
+- Always use Zod for API input validation
+- Never expose S3 bucket name or raw URLs to client
+- Presigned URLs: 15-minute TTL maximum
+- All async Server Components, no useEffect for data fetching
+
+## Security Rules
+- Admin routes: always check HMAC cookie in middleware
+- User uploads: not allowed — admin only
+- File serving: always via /api/documents/[id]/proxy, never direct S3
+- Video: signed URL with short TTL via /api/documents/[id]/stream
+- Rate limit: unlock and share endpoints
+
+## Dark Mode
+- Always dark: bg-zinc-950, text-zinc-50
+- Cards: bg-zinc-900 border-zinc-800
+- Muted text: text-zinc-400
+- Accent: violet-500 / violet-600
